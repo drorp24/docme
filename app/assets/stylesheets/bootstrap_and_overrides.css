@@ -1,0 +1,322 @@
+/*
+  =require twitter-bootstrap-static/bootstrap
+
+  Use Font Awesome icons (default)
+  To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
+  */
+
+/* the !important directive works!
+  .table td,
+  .table th {
+    background-color: yellow !important;  
+table {
+  background-color: green !important;
+}
+.panel {
+  background-color: blue !important;  
+
+*/
+
+.status_icon {
+    width: 16px;
+    position: relative;
+    bottom: 5px;
+}
+#backoffice #menu .alert {
+    position: absolute;
+    top: 110px;
+    width: 685px;
+}
+
+#menus_container {
+    height: 200px;
+    border: 0 solid red;
+}
+
+#backoffice #menu .newsletter_navs, #backoffice #menu #sidebar-wrapper {
+    position: static;
+    margin-left: 0;
+    display: inline-block;
+    float: left;
+}
+
+#dues_menu {
+
+    float: right;
+/*    margin-right: 180px; */
+    position: absolute;
+    left: 320px;
+    margin-top: 15px;
+    border: 0 solid green;
+}
+
+#dues_menu p {
+    font-size: 16px;
+    font-weight: 100;
+    margin-bottom: 20px;
+}
+
+#dues_menu p a:link {
+    color: #666;
+}
+
+#dues_menu p a:hover {
+    color: #bdcd3f;   
+    text-decoration: none;
+    text-shadow: 0 1px 0 white;
+    background: none;   
+    font-weight: 100;
+}
+#dues_menu p a:active {
+    color: #bdcd3f;
+    text-decoration: none;
+}
+#alpha_table {
+    width: 100%;
+}
+
+#alpha_table th, #alpha_table td {
+    padding-left: 5px;
+    direction: rtl;
+    text-align: left;
+}
+
+#supplier_payment_url {
+    width: 415px;
+}
+
+
+
+textarea {
+    width: 415px;
+}
+
+.wysihtml5-editor {
+    direction: rtl;
+}
+
+ul.nav .badge {
+    background-color: #bdcd3f;
+    padding-bottom: 4px;
+    position: relative;
+    top: 10px;
+}
+
+.page-header h1 {
+    font-weight: 400;
+}
+
+#sample h1 {
+    font-weight: 100;
+    font-size: 32px;
+}
+
+.suppliers {
+    padding-bottom: 50px;
+}
+.dd-options, .dd-click-off-close{
+    overflow-y:auto !important;
+}
+
+#backoffice .dd-option, #backoffice .dd-selected {
+    height: 48px;
+    padding: 0;
+}
+
+#backoffice .dd-option-description {
+    margin-top: -14px;
+}
+
+backoffice .dd-option-text {
+    
+}
+
+#backoffice .dd-option-image, #backoffice .dd-selected-image {
+    width: 48px;
+}
+
+#backoffice .dd-image-right {
+    margin-right: 30px;
+}
+
+#backoffice .dd-select a {
+/*    margin-right: 30px;
+    margin-bottom: -16px;
+    margin-top: 12px; */
+}
+
+#backoffice .dd-select a:hover {
+    background-color: transparent;
+    color: #000;
+}
+
+#supplierDropdown {
+  margin: 20px 160px;  
+}
+
+#backoffice .dd-selected .initial {
+    position: relative;
+    top: 12px;
+    right: 30px;
+}
+#backoffice .dd-selected label {
+/*    position: relative;
+    top: 12px; */
+   margin-right: 20px;
+   line-height: 42px;
+}
+#backoffice .dd-selected small {
+    position: relative;
+    top: -14px;
+    right: 20px;
+}
+
+textarea#reminder_text {
+    width: 533px;
+}
+
+.panel:first-of-type {
+/*    margin-top: 35px; */
+}
+
+#sample {
+    margin-top: 95px;
+}
+
+#send_newsletter {
+    margin-left: 20px;
+}
+
+#menu {
+    margin-top: 20px;
+}
+
+#menu .alert-success {
+    width: 645px;
+}
+
+#backoffice a.activities {
+    color: #0088ee;
+}
+
+.navbar .brand {
+    display: inline;
+}
+
+.newsletter_navs li {
+}
+
+#backoffice .newsletter_navs .btn-success {
+    margin-left: 5px;
+}
+
+#credit {
+    position: fixed;
+    bottom: 20px;
+    margin-left: 30px;
+}
+
+#findings_form {
+    margin-top: 150px;
+}
+
+.breadcrumb li:first-of-type {
+    width: 345px;
+    color: #FFB74E;
+    color: #000000;
+}
+
+.breadcrumb {
+    margin-top: -26px;
+}
+
+.breadcrumb li {
+    font-size: 16px;
+    color: #FFB74E;
+    color: #000000;
+     line-height: 20px;
+}
+
+#backoffice .active.breadcrumb li {
+    font-size: 16px;
+    color: #bdcd40;
+     line-height: 20px;
+}
+
+.breadcrumb > li + li:before  {
+    content: none;
+}
+.navbar .nav > li.pull-right {
+    float: right;
+}
+.navbar .nav {
+    float: unset;
+}
+
+#backoffice #campaign_button, #supplier_button, #backoffice #customer_button, #backoffice .btn-success {
+    margin-top: 8px;
+/*    background-color: #BDCD40 !important; */
+    background-image: none;
+    font-weight: bold;
+}
+
+h1#campaigns, h1#customers, h1#suppliers {
+    display: inline;
+}
+#backoffice .btn-primary {
+     color: white;
+}
+#backoffice .btn-danger {
+     color: white;
+}
+#backoffice .btn-success {
+     color: white;
+}
+
+.form-horizontal .control-label {
+    float: left;
+    text-align: left;
+}
+
+
+#backoffice input {
+    height: 34px;
+    line-heigjt: 34px;
+}
+body#backoffice .page-header h1, body#backoffice #sample h1:not(#findings_title1)  {
+}
+.sidebar-nav {
+    margin-top: 145px;
+}
+
+#backoffice .logo img {
+    width: 162px;
+    padding-bottom: 2px;
+    margin-bottom: 3px;
+    margin-left: -38px;
+}
+li {
+    line-height: 45px;
+}
+.form-horizontal .controls {
+    margin-left: 0;
+}
+label {
+    display: inline;
+}
+input, select {
+    width: 65%;
+}
+#backoffice .span6 {
+    margin-left: 2%;
+}
+#backoffice .active {
+    color: #BDCD40;
+}
+#backoffice .navbar-inner a {
+    text-shadow: white -1px 1px;
+    font-size: 18px;
+}
+#backoffice li a {
+    
+}

@@ -1,0 +1,28 @@
+<div id="billbeez">
+
+	<%= render 'top_wrap' if @section == 'top_wrap' or @section.nil? %>
+	
+	<%= render 'header' if @section == 'header' or @section.nil? %>														
+	                                
+	
+	<%= render 'findings' if @section == 'findings' or @section.nil?%>
+
+	<%= render 'highlights' if @section == 'highlights' or @section.nil?%>
+	
+	<%= render 'dues' if @section == 'dues' or @section.nil?%>
+	
+	<%= render 'notifications' if @section == 'notifications' or @section.nil?%>
+	
+	<%= render 'reminders' if @section == 'reminders' or @section.nil?%>
+
+	<%= render 'plans' if @section == 'plans' or @section.nil? %>
+				
+		</td>	
+	</tr>
+	<tr>													
+		<!-- END Blocks Zone -->
+
+	<%= render 'footer' if @section == 'footer' or @section.nil? %>
+	
+		
+</div>

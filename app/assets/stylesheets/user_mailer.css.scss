@@ -1,0 +1,408 @@
+/*
+a[data-editable-field='true']:hover, a[data-editable-field='true']:active {
+    outline: none;
+    text-decoration: none;
+    background: none;
+    color: #000000;
+}
+*/
+//= depend_on_asset "clear.png"
+//= depend_on_asset "loading.gif"
+table td { 
+    border-collapse: collapse !important;
+}
+
+.status_icon {
+    margin: 0 10px !important;
+}
+
+#billbeez table {
+    max-width: none !important;
+}
+
+#feature_line td {
+    width: 60px;
+}
+
+#feature_line:last-child td {
+    border-bottom: 1px solid #dddddd;
+}
+
+option {
+    color: #555555;
+}
+
+.plan_form label, .plan_form p  {
+    direction: ltr;
+}
+
+.plan_form_heading {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 30px 0;
+    text-align: right;
+}
+
+#billbeez .table > tbody > tr.reminder_background td {
+    text-align: right;
+    padding: 10px;
+}
+
+#plans_panel td {
+    border-left: 2px solid #dddddd;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+}
+
+#plans_panel td.control {
+    border: none;
+}
+
+#plans_panel tr.plan_first_line {
+    border-top: 2px solid #dddddd;
+}
+
+#plans_panel tr#feature_line:last-child {
+    border-bottom: 2px solid #dddddd;
+}
+
+
+body#billbeez, body#billbeez p, body#billbeez ul, body#billbeez ul, body#billbeez td, body#billbeez h1, body#billbeez input, body#billbeez select, body#billbeez option {
+    font-family: Segoe UI !important;
+}
+
+body#backoffice, body#backoffice p, body#backoffice ul, body#backoffice ul, body#backoffice td, body#backoffice h1, body#backoffice input, body#backoffice select, body#backoffice option {
+    font-family: Segoe UI !important;
+}
+#billbeez .back_link {
+    font-size: 24px !important;
+    color: #666666 !important;
+    font-weight: 100 !important;
+    text-decoration: underline !important;
+    text-shadow:    #FFFFFF 0px 1px 0px !important;
+}
+
+#dues_title_edit, #notifications_title_edit, #reminders_title_edit {
+    font-weight: 100 !important;
+    font-size: 16px !important;
+}
+
+a[href="#dues"] img, a[href="#notifications"] img, a[href="#reminders"] img {
+    width: 128px;
+}
+
+#billbeez .label, #billbeez .badge {
+    color: #ffffff !important;
+    display: inline-block !important;
+    font-size: 11.844px !important;
+    font-weight: bold !important;
+    line-height: 14px !important;
+    padding: 1px 4px !important;
+    padding: 2px 12px !important;
+    text-shadow: 0 -1px 0 #000000 !important;
+    vertical-align: baseline !important;
+    white-space: nowrap !important;
+}
+
+.section_title th {
+/*    padding: 0 30px !important; */
+}
+
+#suppliers_logo {
+    width: 48px;
+}
+
+#billbeez .editable-input input{
+    width: 480px;
+    height: 30px;
+}
+
+#billbeez #dues_title_edit .editable-input input{
+    width: 180px;
+    height: 30px;
+}
+
+#billbeez #notifications_title_edit .editable-input input{
+    width: 180px;
+    height: 30px;
+}
+#billbeez #reminders_title_edit .editable-input input{
+    width: 180px;
+    height: 30px;
+}
+
+
+#billbeez a[name="dues_title"] .editable-input input{
+    width: 280px;
+    height: 30px;
+}
+
+
+#billbeez .editable-input .input-large{
+    width: 425px !important;
+    height: 30px;
+}
+#billbeez /* IOS-style clear button for text inputs */
+.editable-clear-x {
+   background: image-url('clear.png') center center no-repeat;
+   display: block;
+   width: 13px;    
+   height: 13px;
+   position: absolute;
+   opacity: 0.6;
+   z-index: 100;
+   
+   top: 50%;
+   right: 6px;
+   margin-top: -6px;
+   
+}
+
+#billbeez .editableform-loading {
+    background: image-url('loading.gif') center center no-repeat;  
+    height: 25px;
+    width: auto; 
+    min-width: 25px; 
+}
+
+
+#billbeez .editable-input textarea.input-large{
+}
+
+#billbeez #bills.data.table {
+    background-color: #f9f9f9 !important;
+}
+
+.section_title_element {
+}
+
+#billbeez tr.detail_line td {
+    font-size: 12px;
+    color: #888888;
+}
+
+/*
+#billbeez tbody tr.detail_line:last-child td{
+    border-bottom: 0px solid #999;
+    border-collapse: collapse;
+    border-spacing: 0px 0px;
+}
+*/
+.behind {
+    color: #E64F30;
+    color: #ebaa4a;
+    font-weight: bold;
+}
+
+#bl_4 {
+    
+}
+
+.margin {
+    margin: 0 40px 0 40px; 
+    height: 50px;
+}
+h1#findings_title1 {
+    margin: 50px 0 !important;
+    font-size: 32px !important;
+}
+
+p#findings_sentence {
+    margin-bottom: 0;
+}
+
+#toolbar_bl_7 {
+}
+
+
+.jumbo {
+/*
+    background-color: #eeeeee !important;
+    background-color: #f9f9f9 !important;
+    width: 600px !important;
+*/
+}
+
+.jumbo1 {
+/*
+    background-color: #eeeeee !important;
+    background-color: #f9f9f9 !important;
+    width: 600px !important;
+*/
+}
+#bl_5.jumbotron, #findings.jumbotron {
+    margin-bottom: 0;
+}
+
+th.td_left {
+    text-align: left;
+}
+
+th.td_right {
+    text-align: right;
+}
+
+.highlights_link {
+    color: #bdcd3f !important;
+    text-decoration: underline !important;
+    font-weight: 600;
+}
+
+#billbeez th {
+    text-align: center;
+}
+
+#billbeez td {
+    text-align: center;
+}
+
+.section_title_logo {
+    width: 48px;
+}
+
+
+.section_title_name {
+    font-size: 24px;
+    margin-right: 18px;
+    line-height: 45px;
+    margin-top: 15px;
+    font-weight: 100;
+    color: #595959;
+    text-shadow: 0 1px 0 #ffffff !important;
+}
+
+#logo {
+/*    position: relative !important; */
+    width: 296px !important;
+    right: 136px !important;
+    max-width: 296px !important;
+}
+
+td.leftmost a {
+    margin-left: 8px;
+}
+
+.section_title {
+/*    width: 100%; */
+    height: 60px;
+}
+
+.section_title td {
+    font-size: 22px;
+}
+
+.section_title .td_right {
+    text-align: right;
+}
+
+.section_title .td_left {
+    text-align: left;
+}
+
+.data.table .btn {
+/*    visibility: hidden; */  /* uncomment to return hover nehavior */
+}
+
+.data.table tr:hover .btn {
+    visibility: visible;
+}
+
+.back_link {
+/*    font-size: 18px; */
+}
+
+#reminder_text {
+   text-align: right;
+   width: 500px;
+}
+#billbeez td.plan {
+    font-size: 18px;
+}
+
+#billbeez .notice {
+    font-weight: bold;
+}
+
+.amount {
+    font-weight: bold;
+}
+
+#billbeez .panel-heading {
+    font-size: 24px !important;
+    color: #888888 !important;
+}
+
+#billbeez #bill_background.bill_background  {
+    background-color: #FDE9C9 !important;
+    background-color: #ebce49 !important;
+    background-color: #FFEC5C !important;
+}
+
+/*
+.bill_background td.control {
+    background-image: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 100%);
+    background-repeat: repeat-x;
+}
+*/
+#billbeez #notification_background.notification_background {
+    background-color: #FCF7C9 !important;
+    background-color: #FFFFFF !important;
+}
+
+.reminder_background {
+/*    background-color: #ECF6A8; */
+}
+
+#billbeez #curr_plan_background.curr_plan_background {
+    background-color: #dddddd !important;
+    color: #000000 !important;
+    font-weight: bold;
+}
+
+#billbeez #recc_plan_background.recc_plan_background {
+    background-color: #F7B547 !important;
+    color: #FFFFFF !important;
+    font-weight: bold !important;
+}
+
+#billbeez #othr_plan_background.othr_plan_background {
+    background-color: #dddddd !important;
+    color: #000000 !important;
+    font-weight: bold;
+}
+
+#bills td {
+    border: 0 none;
+}
+
+#billbeez .table > tbody > tr > td  {
+    padding: 0;
+}
+
+.sup_logo, .data.table tr {
+    height: 42px !important;
+}
+
+.status_logo {
+    
+}
+.data.table td {
+    vertical-align: middle;
+}
+#billbeez .highlight_img {
+    vertical-align: bottom;
+}
+.findings {
+    width: 100%;
+}
+.findings td {
+    text-align: right;
+}
+#findings_sentence {
+    font-size: 1.1em;
+    text-align: center !important;
+}
+.finding p{
+    font-size: 0.9em;
+}

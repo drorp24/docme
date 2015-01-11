@@ -1,0 +1,71 @@
+<%= simple_form_for @version, url: campaign_version_path(@campaign, @version), :html => { :class => 'form-horizontal version_form' } do |f| %>
+	<%= f.input :campaign_id, as: :string, disabled: true %>
+	<%= f.input :id, label: "Version", as: :string, disabled: true %>
+	<% if @version.new_record? %>
+		<%= f.association :locale, collection: @available_locales_collection, include_blank: false %>
+	<% else %>
+		<%= f.association :locale, label_method: :description, html: {selected: @version.locale_id}, disabled: true %>
+  	<% end %>
+  	<div class="form-actions">
+		<% if @version.new_record? %>
+			<%= f.button :submit %>
+		<% else%>	
+			<% if @version.approved? %>
+	    		<%= link_to 'Return to Draft', unapprove_version_path(@version), method: 'PUT', class: 'btn btn-primary', disabled: @version.id.nil? %>
+	    	<% else %>
+	    		<%= link_to 'Approve', approve_version_path(@version), method: 'PUT', class: 'btn btn-primary', disabled: @version.id.nil? %>
+	    	<% end %>
+	    <% end %>
+	    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+	                :back, :class => 'btn' %>
+  	</div>
+<% end %>
+<script>
+$(document).ready(function () {
+	
+    function align(el) {
+        if (el.val() == '1') {
+            $('form').attr('dir', 'rtl')
+            $('.form-horizontal .control-label').css('float', 'right')
+            $('.form-horizontal .control-label').css('text-align', 'right')
+        } else {        
+            $('form').attr('dir', 'ltr')
+            $('.form-horizontal .control-label').css('float', 'left')
+            $('.form-horizontal .control-label').css('text-align', 'left')
+        }
+        
+    }
+
+	align($('#version_locale_id'));
+	
+	$('#version_locale_id').change(function() {
+		align($(this))
+	})
+	
+	function refresh_sample() {
+		var version_id = 	$('#version_id').val()
+		$.ajax({
+	  		url: "<%= user_mailer_weekly_url %>",
+	  		data: "<%= "version_id=#{params[:id]}&newsletter_id=1&edit=true".html_safe %>", 
+	  		success: function(result) {
+	  			$('#sample').html(result);
+	  	}});		
+	}
+	
+	<% unless @version.new_record? %>
+
+	refresh_sample ()
+	$('.version_form input').blur(function() {
+		$.ajax({
+			type: "PATCH",
+			url: "<%= campaign_version_path(@campaign, @version) %>",
+			data: $('.version_form').serialize(),
+			success: refresh_sample()		
+		})
+	})
+
+	<% end %>
+
+})
+
+</script>

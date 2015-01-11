@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1>View Newsletter</h1>
+</div>
+<p>
+	<% if @newsletter.sent_at %>
+		<%= "This newsletter was sent on "%>
+		<%= l @newsletter.sent_at, format: :long, locale: :en %>
+	<% else %>
+		This newsletter was never sent to the customer
+	<% end %>	
+</p>
+<p>
+	<span><%= link_to "Edit Newsletter", edit_customer_newsletter_path(@newsletter.customer.id, @newsletter.id), class: "btn btn-success" %></span>
+	<span id="send_newsletter">
+		<% if @newsletter.version.approved? %>
+			<%= link_to "Send Newsletter", deliver_newsletter_path(@newsletter), class: "btn btn-success" %>	
+   		<% else %>
+    		<%= link_to "Send Newsletter", deliver_newsletter_path(@newsletter.id), confirm: "Version #{@newsletter.version_id} has not been approved. Are you sure you want to send newsletter?", :class => 'btn btn-success' %>
+    	<% end %>
+</p>
+<script>
+	
+$(document).ready(function() {
+
+	$.ajax({
+  		url: "<%= user_mailer_weekly_url %>",
+  		data: "newsletter_id=" + "<%= params[:id] %>",
+  		success: function(result) {
+  			$('#sample').html(result);
+  		}
+	});		
+
+/* delete
+	$('.newsletter_form input').blur(function() {
+		var field = 	$(this).attr('name').split('[')[1].split(']')[0]
+		var value = 	$(this).val()
+		$.ajax({
+	  		type: 'PUT',
+	  		url: "<%= newsletter_path(@newsletter)  %>",
+	  		data: field + '=' + value,
+	  		success: refresh_sample()
+	  	});
+	})
+*/	
+})	
+	
+</script>

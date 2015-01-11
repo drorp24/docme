@@ -1,0 +1,85 @@
+<tbody>
+
+  <tr id="bill_background" height="42" class="bill_background" bgcolor="#FFFFFF" style="background-color: #FFFFFF !important;">
+    <td align=right> 
+    	<% if due.supplier %>
+	    	<% if logo = due.supplier.logo and logo.present? %>
+	    		<%= image_tag logo, class: 'sup_logo', size: "42x42", style: "width: 42px !important; height: 42px !important" %>
+	    	<% elsif logo = due.supplier.alpha_logo and logo.present? %>	
+	    		<%= image_tag logo, class: 'sup_logo', size: "42x42", style: "width: 42px !important; height: 42px !important" %>
+			<% elsif name = due.supplier.name %>
+	    		<%= name %>
+    		<% else %>
+    			Missing
+			<% end %>
+		<% end %>
+	</td>
+    <td><%= l due.bill.issue_date %></td>
+    <td class="amount"><%= number_to_currency due.bill.amount %></td>
+    <td>
+		<% if due.bill.due_date %>
+			<% days = (due.bill.due_date.to_date - Date.today.to_date).to_i %>
+			<% scope = days > 0 ? 'datetime.future_time_in_words.x_days' : 'datetime.time_ago_in_words.x_days' %>
+			<% behind = days < 0 %>
+			<% days = days.abs %>
+	    	<span class=<%= behind ? "behind" : "" %>><%= days < 3 ? t(days.to_s, scope: scope) : t('other', scope: scope, count: days) %></span> 
+    	<% else %>
+    		<span>לא צוין</span>
+    	<% end %>
+	</td> 
+	<td>
+		<% if due.bill.view_url.present? %>
+			<%= link_to "צפה", due.bill.view_url, class: "activities highlights_link", target: "_blank" %>
+		<% end %>
+	</td>
+	<td>
+		<% if due.bill.payment_url.present? %>
+			<%= link_to "שלם", due.bill.payment_url, class: "activities highlights_link", target: "_blank" %>
+		<% end %>
+	</td>
+	<td>
+		<% if due.bill.paid_url.present? %>
+			<%= link_to "סמן שולם", due.bill.paid_url, class: "activities highlights_link", target: "_blank" %>
+		<% end %>
+	</td>
+	  <% if @control %>	
+	  	<td>
+		  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+		              customer_newsletter_bill_path(@customer, @newsletter, due.bill, section: params[:section]),
+		              :method => :delete,
+		              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+		              :class => 'btn btn-mini btn-danger' %>
+	  	</td>
+	  	<td>
+	  		<%= link_to "Edit", edit_customer_newsletter_bill_path(@customer, @newsletter, due.bill, section: params[:section]), class: 'btn btn-mini' %>
+  		</td>
+  		<td class="leftmost" dir="ltr">
+  			<%= link_to " + Line", new_customer_newsletter_due_line_path(@customer, @newsletter, due, section: params[:section]), class: 'btn btn-mini' %>
+		</td>
+	  <% end %>
+  </tr>
+  <% due.lines.each do |line| %>
+  	<tr height="42" class="detail_line">
+	  	<td><%= image_tag "detail-16.png" %></td>
+	  	<td><%= line.part1 %></td>
+	  	<td><%= line.part2 %></td>
+	  	<td><%= line.part3 %></td>
+	  	<td><%= line.part4 %></td>
+	  	<td><%= line.part5 %></td>
+	  	<td><%= line.part6 %></td>
+	  	<% if @control %>
+	  		<td>
+			  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+	          customer_newsletter_due_line_path(@customer, @newsletter, due, line,section: params[:section]),
+	          :method => :delete,
+	          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+	          :class => 'btn btn-mini btn-danger' %>
+	  		</td>
+	  		<td>
+	  			<%= link_to "Edit", edit_customer_newsletter_due_line_path(@customer, @newsletter, due, line, section: params[:section]), class: 'btn btn-mini' %>	  			
+	  		</td>
+		<% end %>
+  	</tr>
+  <% end %>
+	
+</tbody>

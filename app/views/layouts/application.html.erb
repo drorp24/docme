@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Billbeez" %></title>
+    <%= csrf_meta_tags %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <%= stylesheet_link_tag "application", :media => "all" %>
+
+    <!-- For third-generation iPad with high-resolution Retina display: -->
+    <!-- Size should be 144 x 144 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+
+    <!-- For iPhone with high-resolution Retina display: -->
+    <!-- Size should be 114 x 114 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+
+    <!-- For first- and second-generation iPad: -->
+    <!-- Size should be 72 x 72 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <!-- Size should be 57 x 57 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+
+    <!-- For all other devices -->
+    <!-- Size should be 32 x 32 pixels -->
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+
+    <%= javascript_include_tag "application" %>
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+
+  </head>
+  <body id="backoffice">
+
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="container-fluid nav-collapse clearfix">
+            <ul class="nav">
+				<li class="span3"><%= link_to image_tag('Final.png'), root_path, class: "logo brand" %><span class="badge">Newsletters</span></li>
+	            <li class="pull-left span2" id="campaigns_menu"><%= link_to "Campaigns", campaigns_path %></li>
+	            <li class="pull-left span2" id="versions_menu"><%= link_to "Versions", @campaign ? campaign_versions_path(@campaign) : "#", title: @campaign ? "" : "To view versions, select Campaign", data: {toggle: 'tooltip'} %></li>
+	            <li class="pull-left span2" id="customers_menu"><%= link_to "Customers", customers_path  %></li>
+	            <li class="pull-left span2" id="newsletters_menu"><%= link_to "Newsletters", @customer ? customer_newsletters_path(@customer) : "#"  %></li>
+				<li class="pull-right"><%= render 'devise/menu/login_items' %></li> 
+			</ul>
+          </div><!--/.nav-collapse -->
+ 
+        </div>
+      </div>
+    </div>
+			<ol class="breadcrumb clearfix">
+			  <li class="span2"></li>
+			  <li class="campaign_bc pull-left span2"><%= @current_campaign.id if @current_campaign %></li>
+			  <li class="version_bc pull-left span2">
+			  	<% if @version and @version.id %>
+					<% version = @version %>
+		 		<% elsif @newsletter %>
+		 			<% version = @newsletter.version %>
+		  		<% end %>
+		  		<% if version %>
+		  			<%= link_to version.id.to_s + '(' + version.locale.description + ')', edit_version_path(version) %>
+	  			<% end %>
+	  		  </li>
+			  <li class=" customer_bc pull-left span2"><%= link_to "#{@customer.id} (#{@customer.name})", edit_customer_path(@customer) if @customer %></li>
+			  <li class=" newsletter_bc pull-left span2"><%= link_to @newsletter.id, customer_newsletter_path(@customer, @newsletter) if @newsletter %></li>
+			</ol>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id="menu" class="<%= params[:controller].split('/')[0] == 'alpha' ? 'span12' : 'span6' %>">
+          <%= bootstrap_flash unless @newsletter_edit %>
+           <% if params[:controller] != "user_mailer" and (params[:newsletter_id] or (params[:controller] == 'newsletters' and params[:action] == 'edit' and params[:id])) %>
+			<div class="page-header">
+				<h1>Edit Newsletter</h1>
+				<p><%= "Note: This newsletter was sent already on #{l @newsletter.sent_at, format: :long, locale: :en}" if @newsletter.sent_at %>
+					
+			</div>
+			<div id="menus_container">
+				<div id="sidebar-wrapper">
+			          	<ul class="sidebar-nav newsletter_navs">
+			          		<li id="dues_nav"><%= link_to "Bills Due", customer_newsletter_bills_path(@customer, @newsletter, section: "dues") %></li>
+			          		<li id="notifications_nav"><%= link_to "Bills Added", customer_newsletter_bills_path(@customer, @newsletter, section: "notifications") %></li>
+						  	<li id="reminders_nav"><%= link_to "Reminders", customer_newsletter_reminders_path(@customer, @newsletter) %></li>
+						  	<li id="plans_nav"><%= link_to "Plans", customer_newsletter_plans_path(@customer, @newsletter) %></li>
+						  	<li id="newsletter_nav"><%= link_to "View Newsletter", customer_newsletter_path(@customer, @newsletter) %></li>
+						</ul>
+					</div>			
+					
+					<% if params[:section] == 'dues'%>
+						<div id="dues_menu">
+							<p><%= link_to  'Create a new Bill Due', new_customer_newsletter_bill_path(@customer, @newsletter, section: params[:section]) %></p>
+							<p><%= link_to  'Copy last newsletter\'s Dues', copy_customer_newsletter_dues_path(@customer, @newsletter, section: params[:section]), confirm: "This will copy every Bill Due from customer's last newsletter to this current newsletter. Are you sure you want to do this?" %></p>
+							<p><%= link_to  'Import Bills Due from Alpha', import_customer_newsletter_bills_path(@customer, @newsletter, section: params[:section]), class: "import_link", data: {campaign: @newsletter.campaign.activity_to.present?, alpha: @customer.alpha_id.present?} %></p>
+							<p><%= link_to  'View customer\'s imported bills', customer_alpha_bills_path(@customer) %></p>
+						</div>
+					<% elsif params[:section] == 'notifications'%>
+						<div id="dues_menu">
+							<p><%= link_to  'Create a new Bill Added', new_customer_newsletter_bill_path(@customer, @newsletter, section: params[:section]) %></p>
+							<p><%= link_to  'Import Bills Added from Alpha', import_customer_newsletter_bills_path(@customer, @newsletter, section: params[:section]), class: "import_link", data: {campaign: @newsletter.campaign.activity_to.present?, alpha: @customer.alpha_id.present?}, confirm: "This will fetch all recently added bills from the Alpha system. Do you want to continue?" %></p>
+							<p><%= link_to  'View customer\'s imported bills', customer_alpha_bills_path(@customer) %></p>
+						</div>
+					<% end %>
+				</div>
+		  <% end %>	
+          <%= yield unless @newsletter_edit or params[:controller] == "user_mailer" %>
+        </div>
+        <div id="sample" class="span5">
+        	<%= yield if @newsletter_edit or params[:controller] == "user_mailer" %>
+        </div>	
+      </div><!--/row-->
+
+      <footer>
+        <p id="credit">&copy; Dror Poliak 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
+<script type="text/javascript" data-turbolinks-eval=false>
+$(document).ready(function() {
+	<% if params[:controller] == 'campaigns' %>
+		$("#backoffice li#campaigns_menu a").addClass('active')
+		$("#backoffice .breadcrumb .campaign_bc").addClass('active')
+	<% elsif params[:controller] == 'versions' %>
+		$("#backoffice li#versions_menu a").addClass('active')
+		$("#backoffice .breadcrumb .version_bc").addClass('active')
+	<% elsif params[:controller] == 'customers' %>
+		$("#backoffice li#customers_menu a").addClass('active')
+		$("#backoffice .breadcrumb .customer_bc").addClass('active')
+	<% elsif @newsletter %>
+		$("#backoffice li#newsletters_menu a").addClass('active')	
+		$("#backoffice .breadcrumb .newsletter_bc").addClass('active')
+		$('.newsletter_navs').removeClass("active")
+		<% case params[:controller] %>
+			<% when "bills" %>	
+				<% if params[:section] == 'dues'	%>		
+					$('#dues_nav').addClass("active")
+				<% elsif params[:section] == 'notifications' %>
+					$('#notifications_nav').addClass("active")
+				<% end %>
+			<% when "lines" %>
+				<% if @due_id %>				
+					$('#bills_nav').addClass("active")
+				<% elsif @notification_id %>
+					$('#notifications_nav').addClass("active")
+				<% end %>
+			<% when "notifications" %>				
+				$('#notifications_nav').addClass("active")
+			<% when "reminders" %>				
+				$('#reminders_nav').addClass("active")
+			<% when "plans" %>				
+				$('#plans_nav').addClass("active")
+			<% end %>
+	<% end %>
+	
+	$('#versions_menu a').tooltip({placement: 'bottom'})
+	
+	<% if params[:controller] == 'newsletters' and params[:action] == 'index' %>
+		$('#menu').attr('class','span9')
+		$('#sample').remove()
+	<% end %>
+	
+	$('.import_link').click(function() {
+		if (($(this).attr('data-alpha')!= "true" ) || ($(this).attr('data-campaign')!= "true")) {
+			alert('Not enough data to perform import:\nBoth campaign activity_to and customer alpha_id need to be populated')
+			return false
+		} else {
+			if (confirm("This will fetch all bills due from the Alpha system. Do you want to do this?") == false) {
+				return false
+			}
+		}
+	})
+})
+</script>

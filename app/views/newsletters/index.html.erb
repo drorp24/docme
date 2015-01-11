@@ -1,0 +1,54 @@
+<%- model_class = Newsletter -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:customer_id) %></th>
+      <th><%= model_class.human_attribute_name(:campaign_id) %></th>
+      <th><%= model_class.human_attribute_name(:version_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= model_class.human_attribute_name(:sent_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% if @newsletters %>
+	    <% @newsletters.order(created_at: :desc).each do |newsletter| %>
+	      <% customer = newsletter.customer if newsletter and newsletter.customer_id %>
+	      <tr>
+	        <td><%= link_to newsletter.id, newsletter_path(newsletter) %></td>
+	        <td><%= link_to (customer.name), customer_path(customer) if customer %></td>
+	        <td><%= link_to newsletter.campaign.id, edit_campaign_path(newsletter.campaign.id) if newsletter.version_id  %></td>
+	        <td><%= link_to newsletter.version_id, edit_campaign_version_path(newsletter.campaign.id, newsletter.version_id) if newsletter.version_id %></td>
+	        <td dir="rtl"><%=l newsletter.created_at, format: :short %></td>
+	        <td dir="rtl"><%= newsletter.sent_at ? (l newsletter.sent_at, format: :short) :  "" %></td>
+	        <td>
+	          <%= link_to t('.show', :default => t("helpers.links.show")),
+	                      customer_newsletter_path(customer, newsletter), :class => 'btn btn-mini' %>
+	          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+	                      edit_customer_newsletter_path(customer, newsletter), :class => 'btn btn-mini' %>
+	          <% if newsletter.sent_at %>
+	          <%= link_to t('.resend', :default => t("helpers.links.resend")),
+	                      deliver_newsletter_path(newsletter, resend: 'yes', campaign_id: params[:campaign_id], customer_id: params[:customer_id]), :class => 'btn btn-mini' %>
+	          <% else %>
+	          <%= link_to t('.send', :default => t("helpers.links.send")),
+	                      deliver_newsletter_path(newsletter, resend: 'no', campaign_id: params[:campaign_id], customer_id: params[:customer_id]), :class => 'btn btn-mini', confirm: "Have you viewed the newsletter? Sure you want to send it?" %>          
+	          <% end %>
+	        </td>
+	      </tr>
+    	<% end %>
+    <% else %>
+	    <tr>
+	    	<td>No newsletters found</td>
+	    	<td></td>
+			<td></td>
+	    	<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	<% end %>		
+  </tbody>
+</table>

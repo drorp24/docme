@@ -1,0 +1,78 @@
+<%= simple_form_for @bill, url: @newsletter ? customer_newsletter_bill_path(@customer.id, @newsletter.id, @bill.id) : customer_bill_path(@customer.id, @bill.id), :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+	<%= f.input :supplier_name,input_html: {value: @bill.supplier_name}, as: :autocomplete, url: autocomplete_supplier_name_bills_path, label: "Supplier", :id_element => '#some_element' %>	
+	<%= f.input :issue_date, as: :string, input_html: {data: {behaviour: 'datepicker'}} %>
+	<%= f.input :due_date, as: :string, input_html: {data: {behaviour: 'datepicker'}}  %>
+	<%= f.input :amount, required: true, as: :decimal %>
+	<%= f.input :payment_url, input_html: {value: @bill.payment_url}, as: :url unless params[:section] == 'notifications' %>
+	<%= f.input :paid_url, input_html: {value: @bill.paid_url}, as: :url unless params[:section] == 'notifications' %>
+	<%= f.input :view_url, input_html: {value: @bill.view_url}, as: :url %>
+	<% if params[:section] == 'dues' %> 
+		<%= f.input :section, as: :hidden, input_html: {value: "dues"} %>
+	  	<%= f.simple_fields_for :dues do |due_form| %>
+	  		<%= due_form.input :newsletter_id, as: :hidden %>
+		<% end %>
+	<% elsif params[:section] == 'notifications' %>
+		<%= f.input :section, as: :hidden, input_html: {value: "notifications"} %>
+	  	<%= f.simple_fields_for :notifications do |notification_form| %>
+	  		<%= notification_form.input :newsletter_id, as: :hidden %>
+			<%= notification_form.input :prev_bill_amt, as: :string %>
+		<% end %>
+	<% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+	<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            :back, :class => 'btn' %>
+  </div>
+<% end %>
+<script>
+	$(document).ready(function() {	
+		
+/*
+		model_date = $('#bill_issue_date').val().split("-")
+		view_date = model_date[2] + "-" + model_date[1] + "-" + model_date[0]
+		$('#bill_issue_date').val(view_date)
+*/
+		<% if @newsletter %>
+			align_val(<%= @newsletter.version.locale_id %>)
+		<% end %>
+		
+
+		$('#bill_supplier_name').change(function() {
+			$.getJSON("/suppliers/payment_url",
+				"supplier_name=" + $(this).val() + "&" + "<%= @bill.id ? "bill_id=#{@bill.id}" : "" %>", 
+				function(data) {
+					$('#bill_payment_url').val(data)				
+				})
+		})
+
+
+		$.getJSON("/suppliers/list", "<%= @bill.id ? "bill_id=#{@bill.id}" : "" %>", function(data) {
+			$('#supplierDropdown').ddslick({
+				
+			    data:data,
+			    width:342,
+			    selectText: "Select existing supplier",
+			    imagePosition:"right",
+			    onSelected: function(selectedData){
+			        $('#bill_payment_url').val(selectedData.selectedData.payment_url)
+			        $('#bill_supplier_name').val(selectedData.selectedData.value).trigger('change');
+			    }   
+			});
+		})
+
+		$('.dd-selected-value').change(function() {
+			alert('hi')
+			$.getJSON("/suppliers/" + $(this).val() + "/url","<%= @bill.id ? "bill_id=#{@bill.id}" : "" %>", function(data) {
+				$('#bill_payment_url').val(data)
+				
+			})
+		})
+		
+
+	})
+</script>

@@ -1,0 +1,15 @@
+<%= simple_form_for(@notification) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+<script>
+	$(document).ready(function() {	
+		align_val(<%= @newsletter.version.locale_id %>)
+	})
+</script>

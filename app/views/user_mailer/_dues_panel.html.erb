@@ -1,0 +1,58 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+	<table class="section_title" style="table-layout: fixed; width=100%">
+			<tr height="60" class="section_title panel-heading panel-primary dues_panel" style="height: 60px !important; background-color: #D2DE7D !important; background-image: linear-gradient(to bottom, #F4F7DF 0%, #D2DE7D 100%) !important;" bgcolor="#D2DE7D" >
+				<td height="60" width="<%= @control ? "187" : "150"%>" class="td_right" style="width: 150px !important; text-align: right;">
+					<%= image_tag "card-128.png", class: "section_title_logo section_title_element", size: "48x48", style: "margin: 0 30px !important;" %>
+				</td>
+				<td width="<%= @control ? "375" : "300"%>">
+				  	<a data-anchor="dues" name="dues" class="section_title_name" style="width: 300px !important; text-decoration: none;text-shadow: 0 1px 0 #ffffff !important;">
+				  		<%= @version.dues_title %>
+				  	</a>
+			  	</td>
+			  	<td dir="ltr" width="<%= @control ? "188" : "150"%>" class="td_left" style="width: 150px !important; text-align: left">
+			  		<% if @control %> 			
+						<span class="section_title_element" style="margin: 0 0 0 15px !important;"></span>
+						<span class="section_title_element" style="margin: 0 0 0 5px !important;"></span>
+			  		<% else %>
+			  			<span class="section_title_element" style="margin: 0 30px !important;"><%= link_to "חזור", "#dues_title", class: 'back_link' %></span>
+			  		<% end %>
+		  		</td>
+	  	</tr>
+	</table>
+  <div class="panel-body">
+    <p>
+		<% if @edit %>
+			<%= link_to @version.dues_sentence, "#", data: {:'editable-field' => 'true', pk: "1", type: "text", name: "dues_sentence", url: modify_version_path(@version.id), title: "Update"} %>
+		<% else %>
+			<%= @newsletter.dues_sentence_or_none %>
+		<% end %>    	
+   </p>
+  </div>
+
+  <!-- Table -->
+  <% if @newsletter.dues.any? %>
+  <table id="bills" class="data table" cellspacing="0">	
+        <thead>
+          <tr>
+            <th>ספק</th>
+            <th>תאריך</th>
+            <th>סכום</th>
+            <th>לתשלום עד</th>
+            <th>פעולות</th>
+            <th></th>
+            <th></th>
+            <% if @control %>
+            	<th></th>
+            	<th></th>
+            	<th></th>
+        	<% end %>
+          </tr>
+        </thead>
+        	<% @newsletter.dues.includes(:bill, :supplier, :lines).order(created_at: :asc).each do |due| %>
+        		<% next unless due.bill %>
+				<%= render 'dues_panel_due', due: due %>
+			<% end %>
+  </table>
+  <% end %>
+</div>
